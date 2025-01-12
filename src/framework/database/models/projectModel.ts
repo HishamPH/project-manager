@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../config/dbSetup";
 
-const User = sequelize.define(
-  "User",
+const Project = sequelize.define(
+  "Project",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -13,39 +13,39 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
-    password: {
-      type: DataTypes.STRING,
+    ownerId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
-    tableName: "users",
+    tableName: "projects",
     timestamps: true,
   }
 );
 
-export default User;
+export default Project;
 
-// class User extends Model {
+// export default class Project extends Model {
 //   declare id: number;
 //   public name!: string;
-//   public email!: string;
-//   public password!: string;
+//   public description!: string;
+//   public ownerId!: number;
 
 //   // Timestamps
 //   public readonly createdAt!: Date;
 //   public readonly updatedAt!: Date;
 
 //   // Associations
-//   public readonly projects?: Project[];
+//   public readonly users?: User[];
+//   public readonly tasks?: Task[];
 // }
 
-// User.init(
+// Project.init(
 //   {
 //     id: {
 //       type: DataTypes.INTEGER,
@@ -56,21 +56,21 @@ export default User;
 //       type: DataTypes.STRING,
 //       allowNull: false,
 //     },
-//     email: {
+//     description: {
 //       type: DataTypes.STRING,
-//       allowNull: false,
-//       unique: true,
+//       allowNull: true,
 //     },
-//     password: {
-//       type: DataTypes.STRING,
+//     ownerId: {
+//       type: DataTypes.INTEGER,
 //       allowNull: false,
 //     },
 //   },
 //   {
 //     sequelize,
-//     tableName: "User",
-//     timestamps: true,
+//     tableName: "Project",
 //   }
 // );
 
-// export default User;
+// // One-to-Many relationship between Project and Task
+// Project.hasMany(Task, { foreignKey: "projectId" });
+// Task.belongsTo(Project, { foreignKey: "projectId" });

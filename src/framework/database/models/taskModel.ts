@@ -1,76 +1,77 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../config/dbSetup";
 
-const User = sequelize.define(
-  "User",
+const Task = sequelize.define(
+  "Task",
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
+    description: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+      allowNull: true,
     },
-    password: {
-      type: DataTypes.STRING,
+    status: {
+      type: DataTypes.ENUM("To Do", "In Progress", "Done"),
+      allowNull: false,
+    },
+    projectId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
-    tableName: "users",
-    timestamps: true,
+    tableName: "tasks", // Explicit table name
+    timestamps: true, // Automatically adds createdAt and updatedAt
   }
 );
 
-export default User;
+export default Task;
 
-// class User extends Model {
+// export default class Task extends Model {
 //   declare id: number;
-//   public name!: string;
-//   public email!: string;
-//   public password!: string;
+//   public title!: string;
+//   public description!: string;
+//   public status!: "To Do" | "In Progress" | "Done";
+//   public projectId!: number;
 
 //   // Timestamps
 //   public readonly createdAt!: Date;
 //   public readonly updatedAt!: Date;
-
-//   // Associations
-//   public readonly projects?: Project[];
 // }
 
-// User.init(
+// Task.init(
 //   {
 //     id: {
 //       type: DataTypes.INTEGER,
 //       autoIncrement: true,
 //       primaryKey: true,
 //     },
-//     name: {
+//     title: {
 //       type: DataTypes.STRING,
 //       allowNull: false,
 //     },
-//     email: {
+//     description: {
 //       type: DataTypes.STRING,
-//       allowNull: false,
-//       unique: true,
+//       allowNull: true,
 //     },
-//     password: {
-//       type: DataTypes.STRING,
+//     status: {
+//       type: DataTypes.ENUM("To Do", "In Progress", "Done"),
+//       allowNull: false,
+//     },
+//     projectId: {
+//       type: DataTypes.INTEGER,
 //       allowNull: false,
 //     },
 //   },
 //   {
 //     sequelize,
-//     tableName: "User",
-//     timestamps: true,
+//     tableName: "Task",
 //   }
 // );
-
-// export default User;
