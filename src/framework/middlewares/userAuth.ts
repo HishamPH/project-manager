@@ -9,16 +9,16 @@ import JwtTokenService from "../services/jwtToken";
 const jwtToken = new JwtTokenService();
 
 interface DecodedToken {
-  id: string;
-  role: string;
-  iat: number;
-  exp: number;
+  id: number;
+  email: string;
+  iat?: number;
+  exp?: number;
 }
 
 declare global {
   namespace Express {
     interface Request {
-      user: DecodedToken;
+      user: DecodedToken | null;
     }
   }
 }
@@ -49,9 +49,9 @@ const userAuth = async (req: Request, res: Response, next: NextFunction) => {
           refreshToken,
           process.env.REFRESH_TOKEN_SECRET as Secret
         ) as DecodedToken;
-        const { id } = decoded;
+        const { id, email } = decoded;
 
-        const newAccessToken = await jwtToken.loginAccessToken({ id });
+        const newAccessToken = await jwtToken.loginAccessToken({ id, email });
         res.cookie("accessToken", newAccessToken, {
           httpOnly: true,
           maxAge: 30 * 24 * 60 * 60 * 1000,

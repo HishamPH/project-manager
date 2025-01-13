@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import { EventEmitter } from "events";
 import userRouter from "../routes/userRouter";
 
+import { swaggerUi, swaggerSpec } from "./swagger";
+
 const app: Application = express();
 import { config } from "dotenv";
 config();
@@ -26,6 +28,10 @@ const createServer = async () => {
     app.use(express.urlencoded({ extended: true }));
 
     app.use(express.static(path.join(__dirname, "../../../public")));
+
+    //swagger setup
+
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.use(
       session({
         secret: "your-secret-key",
