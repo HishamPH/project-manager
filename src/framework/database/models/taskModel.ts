@@ -1,8 +1,18 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../config/dbSetup";
+import TaskEntity from "../../../entity/taskEntity";
 
-const Task = sequelize.define(
-  "Task",
+class Task extends Model<TaskEntity> implements TaskEntity {
+  declare id: number;
+  public title!: string;
+  public description!: string;
+  public status!: "To Do" | "In Progress" | "Done";
+  public projectId!: number;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+Task.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -27,51 +37,10 @@ const Task = sequelize.define(
     },
   },
   {
-    tableName: "tasks", // Explicit table name
-    timestamps: true, // Automatically adds createdAt and updatedAt
+    sequelize,
+    tableName: "tasks",
+    timestamps: true,
   }
 );
 
 export default Task;
-
-// export default class Task extends Model {
-//   declare id: number;
-//   public title!: string;
-//   public description!: string;
-//   public status!: "To Do" | "In Progress" | "Done";
-//   public projectId!: number;
-
-//   // Timestamps
-//   public readonly createdAt!: Date;
-//   public readonly updatedAt!: Date;
-// }
-
-// Task.init(
-//   {
-//     id: {
-//       type: DataTypes.INTEGER,
-//       autoIncrement: true,
-//       primaryKey: true,
-//     },
-//     title: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//     },
-//     description: {
-//       type: DataTypes.STRING,
-//       allowNull: true,
-//     },
-//     status: {
-//       type: DataTypes.ENUM("To Do", "In Progress", "Done"),
-//       allowNull: false,
-//     },
-//     projectId: {
-//       type: DataTypes.INTEGER,
-//       allowNull: false,
-//     },
-//   },
-//   {
-//     sequelize,
-//     tableName: "Task",
-//   }
-// );

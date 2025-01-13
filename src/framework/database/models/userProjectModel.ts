@@ -1,10 +1,20 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import Project from "./projectModel";
 import User from "./userModel";
 import { sequelize } from "../../config/dbSetup";
+import UserProjectEntity from "../../../entity/userProjectEntity";
 
-const UserProject = sequelize.define(
-  "UserProject",
+class UserProject
+  extends Model<UserProjectEntity>
+  implements UserProjectEntity
+{
+  public userId!: number;
+  public projectId!: number;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+UserProject.init(
   {
     userId: {
       type: DataTypes.INTEGER,
@@ -22,6 +32,7 @@ const UserProject = sequelize.define(
     },
   },
   {
+    sequelize,
     tableName: "users_projects",
     timestamps: true,
   }

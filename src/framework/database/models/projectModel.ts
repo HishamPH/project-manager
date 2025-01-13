@@ -1,8 +1,17 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../config/dbSetup";
+import ProjectEntity from "../../../entity/projectEntity";
 
-const Project = sequelize.define(
-  "Project",
+class Project extends Model<ProjectEntity> implements ProjectEntity {
+  declare id: number;
+  public name!: string;
+  public description!: string;
+  public ownerId!: number;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+Project.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -23,54 +32,10 @@ const Project = sequelize.define(
     },
   },
   {
+    sequelize,
     tableName: "projects",
     timestamps: true,
   }
 );
 
 export default Project;
-
-// export default class Project extends Model {
-//   declare id: number;
-//   public name!: string;
-//   public description!: string;
-//   public ownerId!: number;
-
-//   // Timestamps
-//   public readonly createdAt!: Date;
-//   public readonly updatedAt!: Date;
-
-//   // Associations
-//   public readonly users?: User[];
-//   public readonly tasks?: Task[];
-// }
-
-// Project.init(
-//   {
-//     id: {
-//       type: DataTypes.INTEGER,
-//       autoIncrement: true,
-//       primaryKey: true,
-//     },
-//     name: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//     },
-//     description: {
-//       type: DataTypes.STRING,
-//       allowNull: true,
-//     },
-//     ownerId: {
-//       type: DataTypes.INTEGER,
-//       allowNull: false,
-//     },
-//   },
-//   {
-//     sequelize,
-//     tableName: "Project",
-//   }
-// );
-
-// // One-to-Many relationship between Project and Task
-// Project.hasMany(Task, { foreignKey: "projectId" });
-// Task.belongsTo(Project, { foreignKey: "projectId" });

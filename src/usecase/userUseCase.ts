@@ -2,7 +2,7 @@ import UserEntity from "../entity/userEntity";
 import IUserRepsoitory from "./interfaces/iUserRepository";
 
 interface ResponseType {
-  _id?: string;
+  id?: string;
   result?: UserEntity | {} | null;
   status: boolean;
   statusCode: number;
@@ -16,7 +16,7 @@ export default class UserUseCase {
   }
   async findUser(userId: string): Promise<ResponseType> {
     try {
-      const result = await this.iUserRepository.findUser(userId);
+      const result = await this.iUserRepository.findUserById(userId);
       return {
         status: true,
         statusCode: 200,

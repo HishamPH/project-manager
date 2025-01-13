@@ -1,8 +1,17 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../config/dbSetup";
+import UserEntity from "../../../entity/userEntity";
 
-const User = sequelize.define(
-  "User",
+class User extends Model<UserEntity> {
+  declare id: number;
+  declare name: string;
+  declare email: string;
+  declare password: string;
+
+  // Timestamps (if enabled)
+}
+
+User.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -24,6 +33,7 @@ const User = sequelize.define(
     },
   },
   {
+    sequelize,
     tableName: "users",
     timestamps: true,
   }

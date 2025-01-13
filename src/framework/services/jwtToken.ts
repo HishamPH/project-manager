@@ -8,7 +8,7 @@ export default class JwtToken implements IJwtToken {
         { ...user },
         process.env.ACCESS_TOKEN_SECRET as Secret,
         {
-          expiresIn: "30min",
+          expiresIn: "15min",
         }
       );
 

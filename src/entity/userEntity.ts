@@ -1,1 +1,8 @@
-export default interface UserEntity {}
+export default interface UserEntity {
+  id?: number;
+  name: string;
+  email: string;
+  password: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
